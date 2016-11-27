@@ -7,20 +7,20 @@
 <title>Idiomas</title>
 </head>
 	<body>
-		<form action="hello" method="post" name="form1">
+		<form action="welcome" method="post" name="form1">
 			<h1 align="center">Servlet Idiomas</h1>
 			<table align="center" border="1" bgcolor="red">
 				<tr>
 					<td>Pais</td>
-					<td><input type="text" name="pais" size="8"></td>
+					<td><input type="text" name="country" size="8"></td>
 				</tr>
 				<tr>
 					<td>Idioma</td>
 					<td>
 					
-						<select name="idioma">
-		  						<option value="español">Español</option>
-		 						<option value="ingles">Inglés</option>
+						<select name="language1">
+		  						<option value="Spanish">Spanish</option>
+		 						<option value="Irish">Irish</option>
 						</select>
 						
 					</td>
@@ -29,7 +29,7 @@
 					<td>Idioma</td>
 					<td>
 					
-					<input type="text" name="idioma" size="10">
+					<input type="text" name="language2" size="25">
 						
 					</td>
 				</tr>
