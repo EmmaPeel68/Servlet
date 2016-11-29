@@ -11,6 +11,7 @@ import java.util.List;
 import connection.ConnectionH2;
 import connection.ConnectionManager;
 import model.Form;
+import model.Language;
 
 public class Repository {
 	
@@ -155,5 +156,38 @@ public class Repository {
 		
 		manager.close(conn);
 		return listForm;
+	}
+	
+	public List<Language> searchLanguage() {
+		List<Language> listLanguage= new ArrayList<Language>();
+		Connection conn = manager.open(jdbcUrl);
+		ResultSet resultSet = null;
+		PreparedStatement prepareStatement = null;
+		try {
+			prepareStatement = conn.prepareStatement(""
+					+ "SELECT IdIdioma, IDIOMA FROM IDIOMA");
+			resultSet = prepareStatement.executeQuery();
+			while(resultSet.next()){
+				System.out.println(resultSet.getString(2));
+				Language language = new Language();
+				language.setIdLanguage(resultSet.getInt(1));
+				language.setLanguage(resultSet.getString(2));
+				
+				
+				listLanguage.add(language);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}finally {
+			try{
+			close(resultSet);
+			close(prepareStatement);
+			}catch(Exception e){}
+			
+		}
+		manager.close(conn);
+		return listLanguage;
 	}
 }

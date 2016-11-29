@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import model.Form;
+import model.Language;
 import model.assembler.FormAssembler;
 import repository.Repository;
 
@@ -27,4 +28,9 @@ public class Service {
 		return repository.searchAll();
 	}
 	
+	public List<Language> listAllLang() {
+		return repository.searchLanguage();
+	}
+	
 }
+

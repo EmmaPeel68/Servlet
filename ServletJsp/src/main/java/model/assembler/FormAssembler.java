@@ -12,14 +12,15 @@ public class FormAssembler {
 		String country = req.getParameter("country");
 		String language1 = req.getParameter("language1");
 		String language2 = req.getParameter("language2");
-		
 		// Guardamos pais
 		form.setCountry(country);
-		
 		// Seleccionamos que idioma (combobox o manual) esta informado
-		if (language1==null){
+		System.out.println(language1+"/"+language2);
+		if (language1.equals("null")){
+			System.out.println("Languaje2:"+language2);
 			form.setLanguage(language2);
 		} else {
+			System.out.println("Languaje1:"+language1);
 			form.setLanguage(language1);
 		}
 		
