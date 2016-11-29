@@ -28,9 +28,8 @@
 <table border="1">
 <thead>
 	<tr>
-		<td>Nombre</td>
-		<td>Fecha</td>
-		<td>Curso</td>
+		<td>Country</td>
+		<td>Language</td>
 	</tr>
 </thead>
 <tbody>
@@ -46,6 +45,9 @@ for (Form form2 : forms) {
 	out.println(form2.getLanguage());
 	out.println("</td>");
 	out.println("<td>");
+	out.println("<a href='warning.jsp?id="+form2.getLanguage()+"'>x</a>");
+	out.println("</td>");
+	out.println("</tr>");
 	
 }
 	

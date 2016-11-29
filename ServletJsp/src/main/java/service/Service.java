@@ -20,8 +20,8 @@ public class Service {
 		repository.insert(formulary);
 	}
 	
-	public void delete(int idCountry) {
-		repository.delete(idCountry);
+	public void delete(String language) {
+		repository.deleteLanguage(language);
 	}
 	
 	public List<Form> listAllForms() {

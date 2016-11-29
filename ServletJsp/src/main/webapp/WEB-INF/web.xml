@@ -34,5 +34,15 @@
         <servlet-name>listado</servlet-name>
         <url-pattern>cargarListado</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>BorradoServlet</servlet-name>
+        <servlet-class>servlet.DeleteServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>BorradoServlet</servlet-name>
+        <url-pattern>borrado</url-pattern>
+    </servlet-mapping>
 </web-app>     
 

@@ -98,18 +98,36 @@ public class Repository {
 		manager.close(conn);
 	}
 	
+	public void deleteLanguage(String language){
+		int idLanguage = 0;
+		Connection conn = manager.open(jdbcUrl);
+		ResultSet resultSet = null;
+		PreparedStatement prepareStatement = null;
+		try {
+			prepareStatement = conn.prepareStatement("SELECT IDIDIOMA FROM IDIOMA WHERE IDIOMA = ?");
+			prepareStatement.setString(1, language);
+			resultSet = prepareStatement.executeQuery();
+			while(resultSet.next()){
+				idLanguage = resultSet.getInt(1);
+			}			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);}
+		delete(idLanguage);
+		
+	}
 	// Borrado
 	public void delete(int IdIdioma) {
 		Connection conn = manager.open(jdbcUrl);
 		PreparedStatement preparedStatement = null;
 		try {
-			preparedStatement = conn.prepareStatement("DELETE FROM IDIOMA WHERE" +
+			preparedStatement = conn.prepareStatement("DELETE FROM IDIOMA WHERE " +
 					"IDIDIOMA = ?");
 			preparedStatement.setInt(1, IdIdioma);
 			
 			preparedStatement.executeUpdate();
 			
-			preparedStatement = conn.prepareStatement("DELETE FROM PAIS WHERE" +
+			preparedStatement = conn.prepareStatement("DELETE FROM PAIS WHERE " +
 					"IDIOMA = ?");
 			preparedStatement.setInt(1, IdIdioma);
 			
@@ -133,7 +151,6 @@ public class Repository {
 					+ "FROM PAIS INNER JOIN IDIOMA ON PAIS.IDIOMA = IDIOMA.IDIDIOMA");
 			resultSet = prepareStatement.executeQuery();
 			while(resultSet.next()){
-				System.out.println(resultSet.getString(1));
 				Form formulary = new Form();
 				formulary.setCountry(resultSet.getString(1));
 				formulary.setLanguage(resultSet.getString(2));
@@ -191,3 +208,4 @@ public class Repository {
 		return listLanguage;
 	}
 }
+
