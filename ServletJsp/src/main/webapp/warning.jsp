@@ -12,7 +12,7 @@
 	
 	<input type="hidden" value="${param.id}" name="languageDelete">
 	<input type="submit" Value="Yes">
-	<input type="button" Value="No" onclick="window.location.href='/ServletJsp/fin.jsp'">
+	<input type="button" Value="No" onclick="window.location.href='/ServletJsp/end.jsp'">
 	</form>
 
 

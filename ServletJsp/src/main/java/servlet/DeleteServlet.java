@@ -20,7 +20,7 @@ private Service servicio = new  Service();
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		servicio.delete(req.getParameter("languageDelete"));
-		redirect("/fin.jsp", req, resp);
+		redirect("/end.jsp", req, resp);
 		
 		
 	}
