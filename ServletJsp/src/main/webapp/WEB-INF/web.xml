@@ -1,48 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns="http://java.sun.com/xml/ns/j2ee"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
-    version="2.4">
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+	version="2.4">
 
-    <display-name>HelloWorld Application</display-name>
-    <description>
+	<display-name>HelloWorld Application</display-name>
+	<description>
         This is a simple web application with a source code organization
         based on the recommendations of the Application Developer's Guide.
     </description>
 
-     <servlet>
-        <servlet-name>WelcomeServlet</servlet-name>
-        <servlet-class>servlet.WelcomeServlet</servlet-class>
-    </servlet>
+	<servlet>
+		<servlet-name>WelcomeServlet</servlet-name>
+		<servlet-class>servlet.WelcomeServlet</servlet-class>
+	</servlet>
 
-    <servlet-mapping>
-        <servlet-name>WelcomeServlet</servlet-name>
-        <url-pattern>welcome</url-pattern>
-    </servlet-mapping>
-    
-    <welcome-file-list>
-    	<welcome-file>index.jsp</welcome-file>
+	<servlet-mapping>
+		<servlet-name>WelcomeServlet</servlet-name>
+		<url-pattern>welcome</url-pattern>
+	</servlet-mapping>
+
+	
+
+
+	<servlet>
+		<servlet-name>list</servlet-name>
+		<servlet-class>servlet.ListServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>list</servlet-name>
+		<url-pattern>populateList</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>DeleteServlet</servlet-name>
+		<servlet-class>servlet.DeleteServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>DeleteServlet</servlet-name>
+		<url-pattern>delete</url-pattern>
+	</servlet-mapping>
+	
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
-
-
-<servlet>
-        <servlet-name>listado</servlet-name>
-        <servlet-class>servlet.ListadoServlet</servlet-class>
-    </servlet>
-    
-    <servlet-mapping>
-        <servlet-name>listado</servlet-name>
-        <url-pattern>cargarListado</url-pattern>
-    </servlet-mapping>
-    
-    <servlet>
-        <servlet-name>BorradoServlet</servlet-name>
-        <servlet-class>servlet.DeleteServlet</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>BorradoServlet</servlet-name>
-        <url-pattern>borrado</url-pattern>
-    </servlet-mapping>
 </web-app>     
-
