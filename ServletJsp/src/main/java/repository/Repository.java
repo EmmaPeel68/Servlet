@@ -1,6 +1,5 @@
 package repository;
 
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,7 +13,7 @@ import model.Form;
 import model.Language;
 
 public class Repository {
-	
+
 	private static final String jdbcUrl = "jdbc:h2:file:./src/main/resources/test";
 	ConnectionManager manager = new ConnectionH2();
 
@@ -26,7 +25,7 @@ public class Repository {
 			throw new RuntimeException(e);
 		}
 	}
-		
+
 	private void close(ResultSet resultSet) {
 		try {
 			resultSet.close();
@@ -35,70 +34,49 @@ public class Repository {
 			throw new RuntimeException(e);
 		}
 	}
+
 	// insert
 	public void insert(Form formulary) {
 		Connection conn = manager.open(jdbcUrl);
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
-		int id=0;
+		int id = 0;
 		try {
 			preparedStatement = conn.prepareStatement("SELECT * FROM IDIOMA WHERE IDIOMA = ?");
 			preparedStatement.setString(1, formulary.getLanguage());
 			System.out.println(preparedStatement);
 			System.out.println(formulary.getLanguage());
 			resultSet = preparedStatement.executeQuery();
-			if(!resultSet.next()){	
-				preparedStatement = conn.prepareStatement("INSERT INTO IDIOMA (IDIOMA)" +
-						"VALUES (?)");
+			if (!resultSet.next()) {
+				preparedStatement = conn.prepareStatement("INSERT INTO IDIOMA (IDIOMA)" + "VALUES (?)");
 				preparedStatement.setString(1, formulary.getLanguage());
-				
 				preparedStatement.executeUpdate();
-				
 			}
-			
+
+			preparedStatement = conn.prepareStatement("SELECT * FROM IDIOMA WHERE IDIOMA = ?");
+			preparedStatement.setString(1, formulary.getLanguage());
+			System.out.println(preparedStatement);
+			System.out.println(formulary.getLanguage());
+			resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				id = resultSet.getInt(1);
+				System.out.println(id);
+			}
+
+			preparedStatement = conn.prepareStatement("INSERT INTO PAIS (PAIS,IDIOMA)" + "VALUES (?,?)");
+			preparedStatement.setString(1, formulary.getCountry());
+			preparedStatement.setInt(2, id);
+			preparedStatement.executeUpdate();
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);
-		}finally {
-			
-			try {
-				preparedStatement = conn.prepareStatement("SELECT * FROM IDIOMA WHERE IDIOMA = ?");
-				preparedStatement.setString(1, formulary.getLanguage());
-				System.out.println(preparedStatement);
-				System.out.println(formulary.getLanguage());
-				resultSet = preparedStatement.executeQuery();
-				while(resultSet.next()){	
-					
-					id = resultSet.getInt(1);
-					System.out.println(id);
-				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}finally {
-				try {
-					preparedStatement = conn.prepareStatement("INSERT INTO PAIS (PAIS,IDIOMA)" +
-							"VALUES (?,?)");
-					preparedStatement.setString(1, formulary.getCountry());
-					preparedStatement.setInt(2, id);
-					preparedStatement.executeUpdate();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-			}
-			
-				
-			}
-			close(preparedStatement);
-		
-		
-		
+		}
+		close(preparedStatement);
 		manager.close(conn);
 	}
-	
-	public void deleteLanguage(String language){
+
+	public int findLanguageId(String language) {
 		int idLanguage = 0;
 		Connection conn = manager.open(jdbcUrl);
 		ResultSet resultSet = null;
@@ -107,42 +85,57 @@ public class Repository {
 			prepareStatement = conn.prepareStatement("SELECT IDIDIOMA FROM IDIOMA WHERE IDIOMA = ?");
 			prepareStatement.setString(1, language);
 			resultSet = prepareStatement.executeQuery();
-			while(resultSet.next()){
+			while (resultSet.next()) {
 				idLanguage = resultSet.getInt(1);
-			}			
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new RuntimeException(e);}
-		delete(idLanguage);
+			throw new RuntimeException(e);
+		}
+		return idLanguage;
 		
+
 	}
+
 	// Borrado
-	public void delete(int IdIdioma) {
+	public void deleteLanguage(int IdIdioma) {
 		Connection conn = manager.open(jdbcUrl);
 		PreparedStatement preparedStatement = null;
 		try {
-			preparedStatement = conn.prepareStatement("DELETE FROM IDIOMA WHERE " +
-					"IDIDIOMA = ?");
+			preparedStatement = conn.prepareStatement("DELETE FROM IDIOMA WHERE IDIDIOMA = ?");
 			preparedStatement.setInt(1, IdIdioma);
-			
+
 			preparedStatement.executeUpdate();
+
 			
-			preparedStatement = conn.prepareStatement("DELETE FROM PAIS WHERE " +
-					"IDIOMA = ?");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		manager.close(conn);
+	}
+	
+	public void deleteCountry(int IdIdioma) {
+		Connection conn = manager.open(jdbcUrl);
+		PreparedStatement preparedStatement = null;
+		try {
+
+			preparedStatement = conn.prepareStatement("DELETE FROM PAIS WHERE IDIOMA = ?");
 			preparedStatement.setInt(1, IdIdioma);
-			
+
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		manager.close(conn);
 	}
-	
-	// Listado	
+
+	// Listado
 	public List<Form> searchAll() {
-		List<Form> listForm= new ArrayList<Form>();
+		List<Form> listForm = new ArrayList<Form>();
 		Connection conn = manager.open(jdbcUrl);
 		ResultSet resultSet = null;
 		PreparedStatement prepareStatement = null;
@@ -150,62 +143,54 @@ public class Repository {
 			prepareStatement = conn.prepareStatement("SELECT PAIS.PAIS, IDIOMA.IDIOMA "
 					+ "FROM PAIS INNER JOIN IDIOMA ON PAIS.IDIOMA = IDIOMA.IDIDIOMA");
 			resultSet = prepareStatement.executeQuery();
-			while(resultSet.next()){
+			while (resultSet.next()) {
 				Form formulary = new Form();
 				formulary.setCountry(resultSet.getString(1));
 				formulary.setLanguage(resultSet.getString(2));
-				
-				
+
 				listForm.add(formulary);
 			}
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);
-		}finally {
-			try{
-			close(resultSet);
-			close(prepareStatement);
-			}catch(Exception e){}
-			
+		} finally {
+			try {
+				close(resultSet);
+				close(prepareStatement);
+			} catch (Exception e) {
+			}
+
 		}
-		
-		
+
 		manager.close(conn);
 		return listForm;
 	}
-	
+
 	public List<Language> searchLanguage() {
-		List<Language> listLanguage= new ArrayList<Language>();
+		List<Language> listLanguage = new ArrayList<Language>();
 		Connection conn = manager.open(jdbcUrl);
 		ResultSet resultSet = null;
 		PreparedStatement prepareStatement = null;
 		try {
-			prepareStatement = conn.prepareStatement(""
-					+ "SELECT IdIdioma, IDIOMA FROM IDIOMA");
+			prepareStatement = conn.prepareStatement("" + "SELECT IdIdioma, IDIOMA FROM IDIOMA");
 			resultSet = prepareStatement.executeQuery();
-			while(resultSet.next()){
+			while (resultSet.next()) {
 				System.out.println(resultSet.getString(2));
 				Language language = new Language();
 				language.setIdLanguage(resultSet.getInt(1));
 				language.setLanguage(resultSet.getString(2));
-				
-				
+
 				listLanguage.add(language);
 			}
 			
+			close(resultSet);
+			close(prepareStatement);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);
-		}finally {
-			try{
-			close(resultSet);
-			close(prepareStatement);
-			}catch(Exception e){}
-			
-		}
+		} 
 		manager.close(conn);
 		return listLanguage;
 	}
 }
-
