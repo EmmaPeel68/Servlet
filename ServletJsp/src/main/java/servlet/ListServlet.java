@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import model.Form;
 import service.Service;
 
-public class ListadoServlet extends HttpServlet {
+public class ListServlet extends HttpServlet {
 	
 	private Service servicio = new  Service();
 	
