@@ -36,27 +36,27 @@ public class Repository {
 	}
 
 	// insert
-	public void insert(Form formulary) {
+	public void insert(Form form) {
 		Connection conn = manager.open(jdbcUrl);
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		int id = 0;
 		try {
 			preparedStatement = conn.prepareStatement("SELECT * FROM IDIOMA WHERE IDIOMA = ?");
-			preparedStatement.setString(1, formulary.getLanguage());
+			preparedStatement.setString(1, form.getLanguage());
 			System.out.println(preparedStatement);
-			System.out.println(formulary.getLanguage());
+			System.out.println(form.getLanguage());
 			resultSet = preparedStatement.executeQuery();
 			if (!resultSet.next()) {
 				preparedStatement = conn.prepareStatement("INSERT INTO IDIOMA (IDIOMA)" + "VALUES (?)");
-				preparedStatement.setString(1, formulary.getLanguage());
+				preparedStatement.setString(1, form.getLanguage());
 				preparedStatement.executeUpdate();
 			}
 
 			preparedStatement = conn.prepareStatement("SELECT * FROM IDIOMA WHERE IDIOMA = ?");
-			preparedStatement.setString(1, formulary.getLanguage());
+			preparedStatement.setString(1, form.getLanguage());
 			System.out.println(preparedStatement);
-			System.out.println(formulary.getLanguage());
+			System.out.println(form.getLanguage());
 			resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
 				id = resultSet.getInt(1);
@@ -64,7 +64,7 @@ public class Repository {
 			}
 
 			preparedStatement = conn.prepareStatement("INSERT INTO PAIS (PAIS,IDIOMA)" + "VALUES (?,?)");
-			preparedStatement.setString(1, formulary.getCountry());
+			preparedStatement.setString(1, form.getCountry());
 			preparedStatement.setInt(2, id);
 			preparedStatement.executeUpdate();
 
