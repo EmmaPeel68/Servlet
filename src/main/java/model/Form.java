@@ -2,7 +2,7 @@ package model;
 
 public class Form {
 	
-	String country,language;
+	private String country,language;
 
 	public String getCountry() {
 		return country;
