@@ -7,7 +7,7 @@
 	</head>
 	<body>
     
-	<form action="borrado" method="post">
+	<form action="delete" method="post">
 	<p><h2> ¿Are you sure?</h2></p>
 	
 	<input type="hidden" value="${param.id}" name="languageDelete">
