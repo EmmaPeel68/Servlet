@@ -14,12 +14,6 @@ import model.Language;
 
 public class RepositoryLanguage extends Repository{
 	
-	
-	
-	public RepositoryLanguage() {
-		super();
-	}
-
 	public int findLanguageId(String language) {
 		int idLanguage = 0;
 		Connection conn = manager.open(jdbcUrl);
