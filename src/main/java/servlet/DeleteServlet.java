@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import repository.Repository;
+import repository.RepositoryCountry;
 import service.Service;
 
 public class DeleteServlet extends HttpServlet {
@@ -25,8 +25,8 @@ private Service servicio = new  Service();
 		
 	}
 
-	protected void redirect(String destino, HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(destino);
+	protected void redirect(String page, HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
 		dispatcher.forward(req,resp);
 	}
 }

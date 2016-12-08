@@ -3,7 +3,7 @@ package model;
 public class Language {
 	
 	private int idLanguage;
-	private String Language;
+	private String language;
 	
 	public int getIdLanguage() {
 		return idLanguage;
@@ -12,10 +12,10 @@ public class Language {
 		this.idLanguage = idLanguage;
 	}
 	public String getLanguage() {
-		return Language;
+		return language;
 	}
 	public void setLanguage(String language) {
-		Language = language;
+		language = language;
 	}
 	
 	

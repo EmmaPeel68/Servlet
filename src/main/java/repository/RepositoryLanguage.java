@@ -12,28 +12,14 @@ import connection.ConnectionManager;
 import model.Form;
 import model.Language;
 
-public class RepositoryLanguage {
-	private static final String jdbcUrl = "jdbc:h2:file:./src/main/resources/test";
-	ConnectionManager manager = new ConnectionH2();
-
-	private void close(PreparedStatement prepareStatement) {
-		try {
-			prepareStatement.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}
-	}
-
-	private void close(ResultSet resultSet) {
-		try {
-			resultSet.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}
-	}
+public class RepositoryLanguage extends Repository{
 	
+	
+	
+	public RepositoryLanguage() {
+		super();
+	}
+
 	public int findLanguageId(String language) {
 		int idLanguage = 0;
 		Connection conn = manager.open(jdbcUrl);
@@ -93,7 +79,6 @@ public class RepositoryLanguage {
 
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -114,7 +99,6 @@ public class RepositoryLanguage {
 				exist = true;
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return exist;

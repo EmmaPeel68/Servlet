@@ -7,33 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import connection.ConnectionH2;
-import connection.ConnectionManager;
 import model.Form;
-import model.Language;
 
-public class RepositoryCountry {
-
-	private static final String jdbcUrl = "jdbc:h2:file:./src/main/resources/test";
-	ConnectionManager manager = new ConnectionH2();
-
-	private void close(PreparedStatement prepareStatement) {
-		try {
-			prepareStatement.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}
-	}
-
-	private void close(ResultSet resultSet) {
-		try {
-			resultSet.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}
-	}
+public class RepositoryCountry extends Repository {
 
 	// insert
 	public void insert(Form form, int id) {
@@ -54,10 +30,6 @@ public class RepositoryCountry {
 		manager.close(conn);
 	}
 
-	
-
-	
-	
 	public void deleteCountry(int IdIdioma) {
 		Connection conn = manager.open(jdbcUrl);
 		PreparedStatement preparedStatement = null;
@@ -68,7 +40,7 @@ public class RepositoryCountry {
 
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 
@@ -97,17 +69,13 @@ public class RepositoryCountry {
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		} finally {
-			try {
-				close(resultSet);
-				close(prepareStatement);
-			} catch (Exception e) {
-			}
 
+			close(resultSet);
+			close(prepareStatement);
 		}
 
 		manager.close(conn);
 		return listForm;
 	}
 
-	
 }
